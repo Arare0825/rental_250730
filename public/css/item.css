@@ -1,0 +1,173 @@
+/* 全体・既存のスタイル省略 */
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.container {
+  display: flex;
+}
+
+.sidebar {
+  width: 180px;
+  background-color: #0a2a4a;
+  color: white;
+  height: 100vh;
+  padding: 20px 0;
+}
+
+.logo {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 30px;
+  font-size: 18px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  margin: 10px 0;
+}
+
+.sidebar li a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  display: block;
+}
+
+.sidebar li.active a,
+.sidebar li a:hover {
+  background-color: #123a5e;
+}
+
+.main {
+  flex-grow: 1;
+  padding: 20px 40px;
+  background-color: #fff;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end; /* 右寄せ */
+  align-items: center;
+  margin-bottom: 20px;
+}
+h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.new-register {
+  color: white;
+  border: none;
+  padding: 8px 16px;border-radius: 4px;
+  cursor: pointer;
+  align-items: end;
+}
+
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.items-table th,
+.items-table td {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.edit, .delete {
+  padding: 4px 10px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.edit {
+  background-color: #ddd;
+}
+
+.delete {
+  background-color: #f88;
+  color: white;
+}
+
+/* モーダルスタイル */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.4);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 30px;
+  width: 400px;
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="number"],
+.modal-content select {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.modal-content .checkbox {
+  margin-top: 10px;
+}
+
+.modal-content .save {
+  background-color: #1e87f0;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+#sortable td {
+  cursor: move;
+}
+
+#sortable td {
+  cursor: grab;
+}
+
+#sortable tr:active td {
+  cursor: grabbing;
+}
+
+#sortable td button {
+  cursor: pointer;
+}
