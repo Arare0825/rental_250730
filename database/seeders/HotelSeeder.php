@@ -16,7 +16,7 @@ class HotelSeeder extends Seeder
         DB::table('hotels')->insert([
             [
                 'hid' => "test01",
-                'status_pattern' => 0,
+                'status_pattern' => 1,
                 'open_time' => '00:00',
                 'close_time' => '23:45',
                 'allday_active' => true,

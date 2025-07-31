@@ -15,6 +15,7 @@ class OrderController extends Controller
     public function index()
     {
         $setStatusPattern = Auth::user()->status_pattern;
+        $hid = Auth::user()->hid;
 
         // dd($setStatusPattern);
 
@@ -22,15 +23,18 @@ class OrderController extends Controller
         ->select('status', 'status_name')
         ->where('status_pattern', $setStatusPattern)
         ->get();
+        // dd($statusPatterns);
 
         $orders = DB::table('orders')
-                    ->leftJoin('status_patterns', 'orders.status', '=', 'status_patterns.status')
-                    ->select('orders.*', 'status_patterns.status_name')
-                    ->orderby("status")
+                    ->where("hid",$hid)
+                    ->orderBy('status',"asc")
                     ->get();
         // dd($statusPatterns);
 
-        return view('order.index',['orders'=>$orders],['statusPatterns'=>$statusPatterns]);
+        return view('order.index', [
+            'orders' => $orders,
+            'statusPatterns' => $statusPatterns,
+        ]);    
     }
 
     /**
@@ -86,16 +90,32 @@ class OrderController extends Controller
 
     public function partialList()
     {
+        // ユーザーごとのステータスパターンとホテルIDを取得
+        $setStatusPattern = Auth::user()->status_pattern;
+        $hid = Auth::user()->hid;
+    
+        // orders と status_patterns を JOIN（指定したパターンだけ）
         $orders = DB::table('orders')
-            ->leftJoin('status_patterns', 'orders.status', '=', 'status_patterns.status')
-            ->orderBy('status')
-            ->orderBy('created_at',"desc")
+            ->leftJoin('status_patterns', function ($join) use ($setStatusPattern) {
+                $join->on('orders.status', '=', 'status_patterns.status')
+                     ->where('status_patterns.status_pattern', '=', $setStatusPattern);
+            })
+            ->where('orders.hid', $hid)
+            ->orderBy('orders.status')
+            ->orderBy('orders.created_at', 'desc')
             ->select('orders.*', 'status_patterns.status_name')
             ->get();
-
-        $statusPatterns = DB::table('status_patterns')->where('status_pattern', 0)->get();
-
-        return view('order.orders_table', compact('orders', 'statusPatterns'));
-}
-
+    
+        // ステータスパターン一覧も取得（同じパターン番号に限定）
+        $statusPatterns = DB::table('status_patterns')
+            ->where('status_pattern', $setStatusPattern)
+            ->select('status', 'status_name')
+            ->get();
+    
+        // trだけを返す部分ビュー（order/orders_table.blade.php）
+        return view('order.orders_table', [
+            'orders' => $orders,
+            'statusPatterns' => $statusPatterns,
+        ]);
+    }   
 }

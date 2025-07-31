@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('status_patterns', function (Blueprint $table) {
             $table->id();
-            $table->char('hid', 25);
             $table->char('status_pattern', 255);
             $table->char('status', 25);
             $table->char('status_name', 25);

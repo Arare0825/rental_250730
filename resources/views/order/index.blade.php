@@ -29,6 +29,7 @@
           dataType: 'json',
       })
       .done(function (res) {
+
         $('#success-modal').fadeIn();
     setTimeout(function () {
         $('#success-modal').fadeOut();
@@ -36,7 +37,8 @@
 
     // 一覧の再取得
     $.get('/orders/list', function (html) {
-        $('#orders-table-body').html(html);
+      console.log(html);
+      $('#orders-table-body').empty().html(html);
     });      })
       .fail(function (err) {
           console.error('更新失敗:', err);
@@ -61,6 +63,7 @@
             <th>ステータス</th>
           </tr>
         </thead>
+
         <tbody id="orders-table-body">
             @foreach($orders as $order)
           <tr>
@@ -69,7 +72,7 @@
             <td>{{ $order->item_name_ja }}</td>
             <td>{{ $order->quantity }}</td>
             <td>
-                <!-- {{ $order->status_name }} -->
+            {{-- {{ $order->status_name }} --}}
                 <select class="status-select" data-id="{{ $order->id }}">
                 @foreach($statusPatterns as $status)
                     <option value="{{ $status->status }}"
